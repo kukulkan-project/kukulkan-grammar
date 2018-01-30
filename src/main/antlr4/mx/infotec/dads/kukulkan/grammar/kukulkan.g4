@@ -440,7 +440,7 @@ PATTERN_VALUE
 
 ID
 :
-	[a-zA-Z$_]*
+	[a-zA-Z$_]+
 ;
 
 JavaLetterOrDigit
