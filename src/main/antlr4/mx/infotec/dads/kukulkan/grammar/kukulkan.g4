@@ -70,19 +70,19 @@ entity
  */
 association
 :
-	'relationship'
+	'association'
 	(
 		type = cardinality
 	) '{'
 	(
-		relations += relationElement
+		entityAssociations += entityAssociation
 		(
-			','? relations += relationElement
+			','? entityAssociations += entityAssociation
 		)*
 	)? '}'
 ;
 
-relationElement
+entityAssociation
 :
 	from = ID 'to' to = ID
 ;

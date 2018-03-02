@@ -1,17 +1,14 @@
 package mx.infotec.dads.kukulkan.grammar;
 
-import java.util.List;
-
 import mx.infotec.dads.kukulkan.grammar.kukulkanParser.AssociationContext;
-import mx.infotec.dads.kukulkan.grammar.kukulkanParser.BlobValidatorsContext;
+import mx.infotec.dads.kukulkan.grammar.kukulkanParser.BlobFieldTypeContext;
+import mx.infotec.dads.kukulkan.grammar.kukulkanParser.BooleanFieldTypeContext;
 import mx.infotec.dads.kukulkan.grammar.kukulkanParser.CardinalityContext;
-import mx.infotec.dads.kukulkan.grammar.kukulkanParser.DateTypesContext;
+import mx.infotec.dads.kukulkan.grammar.kukulkanParser.DateFieldTypeContext;
+import mx.infotec.dads.kukulkan.grammar.kukulkanParser.EntityContext;
 import mx.infotec.dads.kukulkan.grammar.kukulkanParser.EntityFieldContext;
-import mx.infotec.dads.kukulkan.grammar.kukulkanParser.FieldTypeContext;
-import mx.infotec.dads.kukulkan.grammar.kukulkanParser.NumericValidatorsContext;
-import mx.infotec.dads.kukulkan.grammar.kukulkanParser.RelationElementContext;
-import mx.infotec.dads.kukulkan.grammar.kukulkanParser.RequiredValidatorContext;
-import mx.infotec.dads.kukulkan.grammar.kukulkanParser.StringValidatorsContext;
+import mx.infotec.dads.kukulkan.grammar.kukulkanParser.NumericFieldTypeContext;
+import mx.infotec.dads.kukulkan.grammar.kukulkanParser.StringFieldTypeContext;
 
 /**
  * KukulkanCustomVisitor, this is the main visitor for kukulkan grammar
@@ -20,82 +17,146 @@ import mx.infotec.dads.kukulkan.grammar.kukulkanParser.StringValidatorsContext;
  *
  */
 public class KukulkanCustomVisitor extends kukulkanBaseVisitor<Object> {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see mx.infotec.dads.kukulkan.grammar.kukulkanBaseVisitor#visitEntity(mx.
+     * infotec.dads.kukulkan.grammar.kukulkanParser.EntityContext)
+     */
     @Override
-    public Object visitDomainModel(kukulkanParser.DomainModelContext ctx) {
-        ctx.entities.forEach(entity -> {
-            System.out.println(entity.name.getText().toUpperCase());
-            extractProperties(entity.fields);
-        });
-        return visitChildren(ctx);
+    public Object visitEntity(EntityContext ctx) {
+        return super.visitEntity(ctx);
     }
 
-    private static void extractProperties(List<EntityFieldContext> fields) {
-        fields.forEach(field -> {
-            System.out.print(field.id.getText() + " ");
-            findNotNull(field.type);
-            System.out.println();
-        });
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * mx.infotec.dads.kukulkan.grammar.kukulkanBaseVisitor#visitEntityField(mx.
+     * infotec.dads.kukulkan.grammar.kukulkanParser.EntityFieldContext)
+     */
+    @Override
+    public Object visitEntityField(EntityFieldContext ctx) {
+        return super.visitEntityField(ctx);
     }
 
-    private static void findNotNull(FieldTypeContext type) {
-        if (type.stringFieldType() != null) {
-            System.out.print(type.stringFieldType().name.getText());
-            processStringConstraints(type.stringFieldType().constraints);
-        } else if (type.numericFieldType() != null) {
-            System.out.print(type.numericFieldType().name.getText());
-            processNumericConstraints(type.numericFieldType().constraints);
-        } else if (type.booleanFieldType() != null) {
-            System.out.print(type.booleanFieldType().name.getText() + " ");
-            if (type.booleanFieldType().required != null) {
-                System.out.print(type.booleanFieldType().required.getText());
-            }
-
-        } else if (type.dateFieldType() != null) {
-            processDataFieldType(type.dateFieldType().type);
-            if (type.dateFieldType().required != null) {
-                System.out.println("" + type.dateFieldType().required.getText());
-            }
-        } else if (type.blobFieldType() != null) {
-            processBlobConstraint(type.blobFieldType().constraints);
-        } else {
-        }
-
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * mx.infotec.dads.kukulkan.grammar.kukulkanBaseVisitor#visitStringFieldType
+     * (mx.infotec.dads.kukulkan.grammar.kukulkanParser.StringFieldTypeContext)
+     */
+    @Override
+    public Object visitStringFieldType(StringFieldTypeContext ctx) {
+        return super.visitStringFieldType(ctx);
     }
 
-    private static void processDataFieldType(DateTypesContext ctx) {
-        if (ctx.DATE() != null) {
-            System.out.print(ctx.DATE().getText());
-        } else if (ctx.LOCAL_DATE() != null) {
-            System.out.print(ctx.LOCAL_DATE().getText());
-        } else if (ctx.ZONED_DATETIME() != null) {
-            System.out.print(ctx.ZONED_DATETIME().getText());
-        } else if (ctx.INSTANT() != null) {
-            System.out.print(ctx.INSTANT().getText());
-        }
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * mx.infotec.dads.kukulkan.grammar.kukulkanBaseVisitor#visitDateFieldType(
+     * mx.infotec.dads.kukulkan.grammar.kukulkanParser.DateFieldTypeContext)
+     */
+    @Override
+    public Object visitDateFieldType(DateFieldTypeContext ctx) {
+        return super.visitDateFieldType(ctx);
     }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see mx.infotec.dads.kukulkan.grammar.kukulkanBaseVisitor#
+     * visitNumericFieldType(mx.infotec.dads.kukulkan.grammar.kukulkanParser.
+     * NumericFieldTypeContext)
+     */
+    @Override
+    public Object visitNumericFieldType(NumericFieldTypeContext ctx) {
+        return super.visitNumericFieldType(ctx);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * mx.infotec.dads.kukulkan.grammar.kukulkanBaseVisitor#visitBlobFieldType(
+     * mx.infotec.dads.kukulkan.grammar.kukulkanParser.BlobFieldTypeContext)
+     */
+    @Override
+    public Object visitBlobFieldType(BlobFieldTypeContext ctx) {
+        return super.visitBlobFieldType(ctx);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see mx.infotec.dads.kukulkan.grammar.kukulkanBaseVisitor#
+     * visitBooleanFieldType(mx.infotec.dads.kukulkan.grammar.kukulkanParser.
+     * BooleanFieldTypeContext)
+     */
+    @Override
+    public Object visitBooleanFieldType(BooleanFieldTypeContext ctx) {
+        return super.visitBooleanFieldType(ctx);
+    }
+
+    /**
+     * Visit Constraints.
+     *
+     * @param ctx
+     *            the ctx
+     * @return the visitor context
+     */
+    @Override
+    public Object visitRequiredValidator(kukulkanParser.RequiredValidatorContext ctx) {
+        return super.visitChildren(ctx);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see mx.infotec.dads.kukulkan.grammar.kukulkanBaseVisitor#
+     * visitPatternValidator(mx.infotec.dads.kukulkan.grammar.kukulkanParser.
+     * PatternValidatorContext)
+     */
+    @Override
+    public Object visitPatternValidator(kukulkanParser.PatternValidatorContext ctx) {
+        return super.visitChildren(ctx);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * mx.infotec.dads.kukulkan.grammar.kukulkanBaseVisitor#visitMinValidator(mx
+     * .infotec.dads.kukulkan.grammar.kukulkanParser.MinValidatorContext)
+     */
+    @Override
+    public Object visitMinValidator(kukulkanParser.MinValidatorContext ctx) {
+        return super.visitChildren(ctx);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * mx.infotec.dads.kukulkan.grammar.kukulkanBaseVisitor#visitMaxValidator(mx
+     * .infotec.dads.kukulkan.grammar.kukulkanParser.MaxValidatorContext)
+     */
+    @Override
+    public Object visitMaxValidator(kukulkanParser.MaxValidatorContext ctx) {
+        return super.visitChildren(ctx);
+    }
+    
 
     @Override
     public Object visitAssociation(AssociationContext ctx) {
-        CardinalityContext type = ctx.type;
-        System.out.println(type.getText());
+        // TODO Auto-generated method stub
         return super.visitAssociation(ctx);
     }
-
-    private static void processBlobConstraint(List<BlobValidatorsContext> constraints) {
-
-    }
-
-    private static void processNumericConstraints(RequiredValidatorContext ctx) {
-
-    }
-
-    private static void processNumericConstraints(List<NumericValidatorsContext> ctx) {
-        // TODO Auto-generated method stub
-
-    }
-
-    private static void processStringConstraints(List<StringValidatorsContext> ctx) {
-        // TODO Auto-generated method stub
-
+    @Override
+    public Object visitCardinality(CardinalityContext ctx) {
+        System.out.println(ctx.getText());
+        return super.visitCardinality(ctx);
     }
 }

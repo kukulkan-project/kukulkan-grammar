@@ -32,7 +32,7 @@ entity Direccion (direcciones){
     instante Instant required
 }
 
-relationship OneToMany {
+association OneToMany {
 	Persona to Direccion
 }
 
