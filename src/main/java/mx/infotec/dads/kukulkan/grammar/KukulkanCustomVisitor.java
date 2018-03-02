@@ -2,7 +2,9 @@ package mx.infotec.dads.kukulkan.grammar;
 
 import java.util.List;
 
+import mx.infotec.dads.kukulkan.grammar.kukulkanParser.AssociationContext;
 import mx.infotec.dads.kukulkan.grammar.kukulkanParser.BlobValidatorsContext;
+import mx.infotec.dads.kukulkan.grammar.kukulkanParser.CardinalityContext;
 import mx.infotec.dads.kukulkan.grammar.kukulkanParser.DateTypesContext;
 import mx.infotec.dads.kukulkan.grammar.kukulkanParser.EntityFieldContext;
 import mx.infotec.dads.kukulkan.grammar.kukulkanParser.FieldTypeContext;
@@ -73,10 +75,10 @@ public class KukulkanCustomVisitor extends kukulkanBaseVisitor<Object> {
     }
 
     @Override
-    public Object visitRelationElement(RelationElementContext ctx) {
-        System.out.println("visti relation element");
-        System.out.println(ctx.getText());
-        return super.visitRelationElement(ctx);
+    public Object visitAssociation(AssociationContext ctx) {
+        CardinalityContext type = ctx.type;
+        System.out.println(type.getText());
+        return super.visitAssociation(ctx);
     }
 
     private static void processBlobConstraint(List<BlobValidatorsContext> constraints) {

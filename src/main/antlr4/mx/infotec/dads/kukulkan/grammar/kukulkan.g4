@@ -363,8 +363,8 @@ MANY_TO_MANY
 stringValidators
 :
 	required = requiredValidator
-	| minLenght = minLengthValidator
-	| maxLenght = maxLengthValidator
+	| minLenght = minValidator
+	| maxLenght = maxValidator
 	| pattern = patternValidator
 ;
 
@@ -378,23 +378,13 @@ numericValidators
 blobValidators
 :
 	required = requiredValidator
-	| minBytesValue = minBytesValidator
-	| maxBytesValue = maxBytesValidator
+	| minBytesValue = minValidator
+	| maxBytesValue = maxValidator
 ;
 
 requiredValidator
 :
 	'required'
-;
-
-minLengthValidator
-:
-	'minlength' '(' NUMERIC_VALUE ')'
-;
-
-maxLengthValidator
-:
-	'maxlength' '(' NUMERIC_VALUE ')'
 ;
 
 patternValidator
@@ -410,16 +400,6 @@ minValidator
 maxValidator
 :
 	'max' '(' NUMERIC_VALUE ')'
-;
-
-minBytesValidator
-:
-	'minbytes' '(' NUMERIC_VALUE ')'
-;
-
-maxBytesValidator
-:
-	'maxbytes' '(' value = NUMERIC_VALUE ')'
 ;
 
 cardinality
