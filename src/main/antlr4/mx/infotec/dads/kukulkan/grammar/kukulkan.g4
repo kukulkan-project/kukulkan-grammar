@@ -72,7 +72,7 @@ association
 :
 	'relationship'
 	(
-		type = ID
+		type = cardinality
 	) '{'
 	(
 		relations += relationElement
@@ -336,6 +336,27 @@ TEXT_BLOB
 	'TextBlob'
 ;
 
+ONE_TO_MANY
+:
+	'OneToMany'
+;
+
+MANY_TO_ONE
+:
+	'ManyToOne'
+;
+
+ONE_TO_ONE
+:
+	'OneToOne'
+;
+
+MANY_TO_MANY
+:
+	'ManyToMany'
+;
+
+
 /* =========================================================================
  * VALIDATOR
  * ========================================================================= */
@@ -448,24 +469,3 @@ JavaLetterOrDigit
 	| // covers UTF-16 surrogate pairs encodings for U+10000 to U+10FFFF
 	[\uD800-\uDBFF] [\uDC00-\uDFFF]
 ;
-
-ONE_TO_MANY
-:
-	'OneToMany'
-;
-
-MANY_TO_ONE
-:
-	'ManyToOne'
-;
-
-ONE_TO_ONE
-:
-	'OneToOne'
-;
-
-MANY_TO_MANY
-:
-	'ManyToMany'
-;
-
