@@ -40,8 +40,7 @@ grammar kukulkan;
  */
 domainModel
 :
-	entities += entity+
-	| settings += option
+	entities += entity+ associations += association*
 ;
 
 /** 
@@ -63,6 +62,29 @@ entity
 			)*
 		)? '}'
 	)?
+;
+
+/** 
+ * Associaction
+ *  
+ */
+association
+:
+	'relationship'
+	(
+		type = ID
+	) '{'
+	(
+		relations += relationElement
+		(
+			','? relations += relationElement
+		)*
+	)? '}'
+;
+
+relationElement
+:
+	from = ID 'to' to = ID
 ;
 
 /** 
@@ -188,7 +210,7 @@ DOUBLE
  */
 booleanFieldType
 :
-	name= BOOLEAN_TYPE required=requiredValidator*
+	name = BOOLEAN_TYPE required = requiredValidator*
 ;
 
 /** 
@@ -225,7 +247,6 @@ dateTypes
  * DATE Token
  *  
  */
- 
 DATE
 :
 	'Date'
@@ -386,31 +407,6 @@ cardinality
 	| MANY_TO_ONE
 	| ONE_TO_ONE
 	| MANY_TO_MANY
-;
-
-/* =========================================================================
- * OPTION 
- * ========================================================================= */
-option
-:
-	setting = optionSetting
-;
-
-optionSetting
-:
-	dtoOption
-;
-/* =========================================================================
- * DTO OPTION 
- * ========================================================================= */
-dtoOption
-:
-	'dto'?
-;
-
-dtoType
-:
-	'mapstruct'
 ;
 
 WS

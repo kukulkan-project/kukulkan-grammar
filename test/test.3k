@@ -1,5 +1,22 @@
-entity Usuario (usuarios){
-    nombre String required minlength(3) maxlength(50) pattern(/hola/),
+entity Persona (usuarios){
+    nombre String required minlength(3) maxlength(50) pattern("persona"),
+    edad Integer required,
+    numeroCredencial Long,
+    sueldo BigDecimal,
+    impuesto Float,
+    impuestoDetalle Double,
+    activo Boolean,
+    fechaLocalDate LocalDate,
+    fechaZoneDateTime ZonedDateTime,
+    imagen Blob,
+    imagenAnyBlob AnyBlob,
+    imagenBlob ImageBlob,
+    desc TextBlob,
+    instante Instant
+}
+
+entity Direccion (direcciones){
+    nombre String required minlength(3) maxlength(50) pattern("direccion"),
     edad Integer required min(12) max(23),
     numeroCredencial Long required min(13) max(23),
     sueldo BigDecimal required min(15) max(23),
@@ -14,3 +31,8 @@ entity Usuario (usuarios){
     desc TextBlob required minbytes(3) maxbytes(5000000),
     instante Instant required
 }
+
+relationship OneToMany {
+	Persona to Direccion
+}
+

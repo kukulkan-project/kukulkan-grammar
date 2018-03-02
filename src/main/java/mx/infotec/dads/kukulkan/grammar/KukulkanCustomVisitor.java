@@ -7,6 +7,7 @@ import mx.infotec.dads.kukulkan.grammar.kukulkanParser.DateTypesContext;
 import mx.infotec.dads.kukulkan.grammar.kukulkanParser.EntityFieldContext;
 import mx.infotec.dads.kukulkan.grammar.kukulkanParser.FieldTypeContext;
 import mx.infotec.dads.kukulkan.grammar.kukulkanParser.NumericValidatorsContext;
+import mx.infotec.dads.kukulkan.grammar.kukulkanParser.RelationElementContext;
 import mx.infotec.dads.kukulkan.grammar.kukulkanParser.RequiredValidatorContext;
 import mx.infotec.dads.kukulkan.grammar.kukulkanParser.StringValidatorsContext;
 
@@ -16,7 +17,7 @@ import mx.infotec.dads.kukulkan.grammar.kukulkanParser.StringValidatorsContext;
  * @author Daniel Cortes Pichardo
  *
  */
-public class kukulkanCustomVisitor extends kukulkanBaseVisitor<Object> {
+public class KukulkanCustomVisitor extends kukulkanBaseVisitor<Object> {
     @Override
     public Object visitDomainModel(kukulkanParser.DomainModelContext ctx) {
         ctx.entities.forEach(entity -> {
@@ -42,7 +43,7 @@ public class kukulkanCustomVisitor extends kukulkanBaseVisitor<Object> {
             System.out.print(type.numericFieldType().name.getText());
             processNumericConstraints(type.numericFieldType().constraints);
         } else if (type.booleanFieldType() != null) {
-            System.out.print(type.booleanFieldType().name.getText()+" ");
+            System.out.print(type.booleanFieldType().name.getText() + " ");
             if (type.booleanFieldType().required != null) {
                 System.out.print(type.booleanFieldType().required.getText());
             }
@@ -69,6 +70,13 @@ public class kukulkanCustomVisitor extends kukulkanBaseVisitor<Object> {
         } else if (ctx.INSTANT() != null) {
             System.out.print(ctx.INSTANT().getText());
         }
+    }
+
+    @Override
+    public Object visitRelationElement(RelationElementContext ctx) {
+        System.out.println("visti relation element");
+        System.out.println(ctx.getText());
+        return super.visitRelationElement(ctx);
     }
 
     private static void processBlobConstraint(List<BlobValidatorsContext> constraints) {
