@@ -30,17 +30,21 @@
  *  
  *  @autor: Daniel Cortes Pichardo 
  *
- *  Grammar used in the kukulkan-core generator
+ *  GrammarParser used in the kukulkan-core generator
  *
  */
-grammar kukulkan;
+parser grammar kukulkanParser;
+
+options {
+	tokenVocab = kukulkanLexer;
+}
 
 /**
  * Domain Model Rule
  */
 domainModel
 :
-	entities += entity+ associations += association*
+	entities += entity+
 ;
 
 /** 
@@ -49,42 +53,19 @@ domainModel
  */
 entity
 :
-	'entity' name = ID
+	ENTITY name = ID
 	(
-		'(' tableName = ID ')'
+		LPAREN tableName = ID RPAREN
 	)?
 	(
-		'{'
+		LBRACE
 		(
 			fields += entityField
 			(
-				','? fields += entityField
+				COMMA? fields += entityField
 			)*
-		)? '}'
+		)? RBRACE
 	)?
-;
-
-/** 
- * Associaction
- *  
- */
-association
-:
-	'association'
-	(
-		type = cardinality
-	) '{'
-	(
-		entityAssociations += entityAssociation
-		(
-			','? entityAssociations += entityAssociation
-		)*
-	)? '}'
-;
-
-entityAssociation
-:
-	from = ID 'to' to = ID
 ;
 
 /** 
@@ -93,7 +74,8 @@ entityAssociation
  */
 entityField
 :
-	id = ID type = fieldType
+	(id = ID SEMICOLON type = fieldType)
+	| associationField
 ;
 
 /** 
@@ -107,16 +89,15 @@ fieldType
 	| booleanFieldType
 	| dateFieldType
 	| blobFieldType
-	| entityType
 ;
 
 /** 
  * Entity Type Rule
  *  
  */
-entityType
+associationField
 :
-	entity
+	type = cardinality id = ID SEMICOLON targetEntity = ID
 ;
 
 /** 
@@ -134,7 +115,7 @@ stringFieldType
  */
 stringType
 :
-	'String'
+	STRING
 ;
 
 /** 
@@ -160,66 +141,12 @@ numericTypes
 ;
 
 /** 
- * INTEGER Token
- *  
- */
-INTEGER
-:
-	'Integer'
-;
-
-/** 
- * LONG Token
- *  
- */
-LONG
-:
-	'Long'
-;
-
-/** 
- * BIG_DECIMAL Token
- *  
- */
-BIG_DECIMAL
-:
-	'BigDecimal'
-;
-
-/** 
- * FLOAT Token
- *  
- */
-FLOAT
-:
-	'Float'
-;
-
-/** 
- * DOUBLE Token
- *  
- */
-DOUBLE
-:
-	'Double'
-;
-
-/** 
  * Boolean Field Type Token
  *  
  */
 booleanFieldType
 :
 	name = BOOLEAN_TYPE required = requiredValidator*
-;
-
-/** 
- * BOOLEAN_TYPE Token
- *  
- */
-BOOLEAN_TYPE
-:
-	'Boolean'
 ;
 
 /** 
@@ -244,42 +171,6 @@ dateTypes
 ;
 
 /** 
- * DATE Token
- *  
- */
-DATE
-:
-	'Date'
-;
-
-/** 
- * LOCAL_DATE Token
- *  
- */
-LOCAL_DATE
-:
-	'LocalDate'
-;
-
-/** 
- * ZONED_DATETIME Token
- *  
- */
-ZONED_DATETIME
-:
-	'ZonedDateTime'
-;
-
-/** 
- * INSTANT Token
- *  
- */
-INSTANT
-:
-	'Instant'
-;
-
-/** 
  * Blob Field Type Rule
  *  
  */
@@ -299,63 +190,6 @@ blobTypes
 	| IMAGE_BLOB
 	| TEXT_BLOB
 ;
-
-/** 
- * BLOB Token
- *  
- */
-BLOB
-:
-	'Blob'
-;
-
-/** 
- * ANY_BLOB Token
- *  
- */
-ANY_BLOB
-:
-	'AnyBlob'
-;
-
-/** 
- * IMAGE_BLOB Token
- *  
- */
-IMAGE_BLOB
-:
-	'ImageBlob'
-;
-
-/** 
- * TEXT_BLOB Token
- *  
- */
-TEXT_BLOB
-:
-	'TextBlob'
-;
-
-ONE_TO_MANY
-:
-	'OneToMany'
-;
-
-MANY_TO_ONE
-:
-	'ManyToOne'
-;
-
-ONE_TO_ONE
-:
-	'OneToOne'
-;
-
-MANY_TO_MANY
-:
-	'ManyToMany'
-;
-
 
 /* =========================================================================
  * VALIDATOR
@@ -384,22 +218,22 @@ blobValidators
 
 requiredValidator
 :
-	'required'
+	REQUIRED
 ;
 
 patternValidator
 :
-	'pattern' '(' PATTERN_VALUE ')'
+	PATTERN LPAREN PATTERN_VALUE RPAREN
 ;
 
 minValidator
 :
-	'min' '(' NUMERIC_VALUE ')'
+	MIN LPAREN NUMERIC_VALUE RPAREN
 ;
 
 maxValidator
 :
-	'max' '(' NUMERIC_VALUE ')'
+	MAX LPAREN NUMERIC_VALUE RPAREN
 ;
 
 cardinality
@@ -408,44 +242,4 @@ cardinality
 	| MANY_TO_ONE
 	| ONE_TO_ONE
 	| MANY_TO_MANY
-;
-
-WS
-:
-	[ \t\r\n\u000C]+ -> skip
-;
-
-COMMENT
-:
-	'/*' .*? '*/' -> channel ( HIDDEN )
-;
-
-LINE_COMMENT
-:
-	'//' ~[\r\n]* -> channel ( HIDDEN )
-;
-
-NUMERIC_VALUE
-:
-	[0-9]+
-;
-
-PATTERN_VALUE
-:
-	'"' .*? '"'
-;
-
-ID
-:
-	[a-zA-Z$_]+
-;
-
-JavaLetterOrDigit
-:
-	[a-zA-Z0-9$_] // these are the "java letters or digits" below 0x7F
-
-	| // covers all characters above 0x7F which are not a surrogate
-	~[\u0000-\u007F\uD800-\uDBFF]
-	| // covers UTF-16 surrogate pairs encodings for U+10000 to U+10FFFF
-	[\uD800-\uDBFF] [\uDC00-\uDFFF]
 ;

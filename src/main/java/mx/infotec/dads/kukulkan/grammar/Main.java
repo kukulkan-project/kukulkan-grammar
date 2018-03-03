@@ -17,7 +17,7 @@ public class Main {
         kukulkanParser parser = new kukulkanParser(tokens);
         kukulkanParser.DomainModelContext tree = parser.domainModel();
         KukulkanCustomVisitor visitor = new KukulkanCustomVisitor();
-        visitor.visit(tree);
+        // visitor.visit(tree);
         System.out.println("Interpretation finished");
     }
 }

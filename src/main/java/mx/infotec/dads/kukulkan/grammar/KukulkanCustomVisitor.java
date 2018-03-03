@@ -1,6 +1,5 @@
 package mx.infotec.dads.kukulkan.grammar;
 
-import mx.infotec.dads.kukulkan.grammar.kukulkanParser.AssociationContext;
 import mx.infotec.dads.kukulkan.grammar.kukulkanParser.BlobFieldTypeContext;
 import mx.infotec.dads.kukulkan.grammar.kukulkanParser.BooleanFieldTypeContext;
 import mx.infotec.dads.kukulkan.grammar.kukulkanParser.CardinalityContext;
@@ -16,7 +15,7 @@ import mx.infotec.dads.kukulkan.grammar.kukulkanParser.StringFieldTypeContext;
  * @author Daniel Cortes Pichardo
  *
  */
-public class KukulkanCustomVisitor extends kukulkanBaseVisitor<Object> {
+public class KukulkanCustomVisitor extends kukulkanParserBaseVisitor<Object> {
     /*
      * (non-Javadoc)
      * 
@@ -147,13 +146,7 @@ public class KukulkanCustomVisitor extends kukulkanBaseVisitor<Object> {
     public Object visitMaxValidator(kukulkanParser.MaxValidatorContext ctx) {
         return super.visitChildren(ctx);
     }
-    
 
-    @Override
-    public Object visitAssociation(AssociationContext ctx) {
-        // TODO Auto-generated method stub
-        return super.visitAssociation(ctx);
-    }
     @Override
     public Object visitCardinality(CardinalityContext ctx) {
         System.out.println(ctx.getText());
