@@ -74,10 +74,14 @@ entity
  */
 entityField
 :
-	(id = ID SEMICOLON type = fieldType)
+	primitiveField
 	| associationField
 ;
 
+primitiveField
+:
+	id = ID SEMICOLON type = fieldType
+;
 /** 
  * Field Type Rule
  *  
