@@ -101,7 +101,7 @@ fieldType
  */
 associationField
 :
-	type = cardinality id = ID SEMICOLON targetEntity = ID
+	type = cardinality ( LPAREN targetPropertyName = ID RPAREN )? id = ID SEMICOLON targetEntity = ID
 ;
 
 /** 
