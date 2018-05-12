@@ -101,7 +101,7 @@ fieldType
  */
 associationField
 :
-	type = cardinality ( LPAREN targetPropertyName = ID RPAREN )? id = ID SEMICOLON targetEntity = ID
+	type = cardinality ( LPAREN toSourcePropertyName = ID RPAREN )? id = ID SEMICOLON targetEntity = ID
 ;
 
 /** 
@@ -168,8 +168,7 @@ dateFieldType
  */
 dateTypes
 :
-	DATE
-	| LOCAL_DATE
+	LOCAL_DATE
 	| ZONED_DATETIME
 	| INSTANT
 ;

@@ -100,15 +100,6 @@ BOOLEAN_TYPE
 ;
 
 /** 
- * DATE Token
- *  
- */
-DATE
-:
-	'Date'
-;
-
-/** 
  * LOCAL_DATE Token
  *  
  */
