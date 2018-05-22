@@ -62,7 +62,7 @@ entity
 		(
 			fields += entityField
 			(
-				COMMA? fields += entityField
+				COMMA fields += entityField
 			)*
 		)? RBRACE
 	)?
@@ -150,7 +150,7 @@ numericTypes
  */
 booleanFieldType
 :
-	name = BOOLEAN_TYPE required = requiredValidator*
+	name = BOOLEAN_TYPE required = requiredValidator?
 ;
 
 /** 
