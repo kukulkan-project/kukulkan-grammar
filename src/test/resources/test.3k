@@ -12,7 +12,8 @@ entity Persona (usuarios){
     imagenAnyBlob : AnyBlob,
     imagenBlob : ImageBlob,
     desc : TextBlob,
-    instante : Instant
+    instante : Instant,
+    OneToOne user : UserCore
 }
 
 entity Direccion (direcciones){

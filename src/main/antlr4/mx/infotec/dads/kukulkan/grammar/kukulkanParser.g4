@@ -76,6 +76,7 @@ entityField
 :
 	primitiveField
 	| associationField
+	| coreEntityAssociationField
 ;
 
 primitiveField
@@ -101,7 +102,16 @@ fieldType
  */
 associationField
 :
-	type = cardinality ( LPAREN toSourcePropertyName = ID RPAREN )? id = ID SEMICOLON targetEntity = ID
+	type = cardinality ( LPAREN toSourcePropertyName = ID RPAREN )? id = ID SEMICOLON targetEntity = ID 
+;
+
+/** 
+ * Core Entity Association Rule
+ *  
+ */
+coreEntityAssociationField
+:
+	type = userCardinality id = ID SEMICOLON targetEntity = coreEntity
 ;
 
 /** 
@@ -239,10 +249,22 @@ maxValidator
 	MAX LPAREN NUMERIC_VALUE RPAREN
 ;
 
+coreEntity
+:
+	CORE_USER
+;
+
 cardinality
 :
 	ONE_TO_MANY
 	| MANY_TO_ONE
+	| ONE_TO_ONE
+	| MANY_TO_MANY
+;
+
+userCardinality
+:
+	MANY_TO_ONE
 	| ONE_TO_ONE
 	| MANY_TO_MANY
 ;

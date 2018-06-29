@@ -182,6 +182,15 @@ MANY_TO_MANY
 	'ManyToMany'
 ;
 
+/** 
+ * USER Token
+ *  
+ */
+CORE_USER
+:
+	'CoreUser'
+;
+
 NUMERIC_VALUE
 :
 	[0-9]+
