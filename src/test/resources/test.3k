@@ -1,7 +1,7 @@
 entity Persona (usuarios){
     nombre : String required min(3) max(50) pattern("persona"),
     edad : Integer required,
-    numero : Long,
+    -> numero : Long,
     sueldo : BigDecimal,
     impuesto : Float,
     impuestoDetalle : Double,
@@ -19,7 +19,7 @@ entity Persona (usuarios){
 entity Direccion (direcciones){
     nombre : String required min(3) max(50) pattern("direccion"),
     edad : Integer required min(12) max(23),
-    numeroCredencial : Long required min(13) max(23),
+    -> numeroCredencial : Long required min(13) max(23),
     sueldo : BigDecimal required min(15) max(23),
     impuesto : Float required min(12) max(23),
     impuestoDetalle : Double required min(11) max(23),

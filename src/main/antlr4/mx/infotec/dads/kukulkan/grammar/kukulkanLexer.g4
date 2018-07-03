@@ -40,6 +40,11 @@ ENTITY
 	'entity'
 ;
 
+DISPLAY_FIELD_MARKER
+:
+	'->'
+;
+
 STRING
 :
 	'String'

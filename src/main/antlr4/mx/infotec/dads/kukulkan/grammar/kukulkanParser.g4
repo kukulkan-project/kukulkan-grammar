@@ -81,8 +81,14 @@ entityField
 
 primitiveField
 :
-	id = ID SEMICOLON type = fieldType
+	(markers = primitiveFieldMarkers)? id = ID SEMICOLON type = fieldType
 ;
+
+primitiveFieldMarkers
+:
+	DISPLAY_FIELD_MARKER
+;
+
 /** 
  * Field Type Rule
  *  
