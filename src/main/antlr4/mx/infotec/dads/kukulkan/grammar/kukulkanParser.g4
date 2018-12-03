@@ -62,7 +62,7 @@ entity
 		(
 			fields += entityField
 			(
-				COMMA? fields += entityField
+				COMMA fields += entityField
 			)*
 		)? RBRACE
 	)?
@@ -76,12 +76,19 @@ entityField
 :
 	primitiveField
 	| associationField
+	| coreEntityAssociationField
 ;
 
 primitiveField
 :
-	id = ID SEMICOLON type = fieldType
+	(markers = primitiveFieldMarkers)? id = ID SEMICOLON type = fieldType
 ;
+
+primitiveFieldMarkers
+:
+	DISPLAY_FIELD_MARKER
+;
+
 /** 
  * Field Type Rule
  *  
@@ -101,7 +108,16 @@ fieldType
  */
 associationField
 :
-	type = cardinality id = ID SEMICOLON targetEntity = ID
+	type = cardinality ( LPAREN toSourcePropertyName = ID RPAREN )? id = ID SEMICOLON targetEntity = ID 
+;
+
+/** 
+ * Core Entity Association Rule
+ *  
+ */
+coreEntityAssociationField
+:
+	type = userCardinality id = ID SEMICOLON targetEntity = coreEntity
 ;
 
 /** 
@@ -150,7 +166,7 @@ numericTypes
  */
 booleanFieldType
 :
-	name = BOOLEAN_TYPE required = requiredValidator*
+	name = BOOLEAN_TYPE required = requiredValidator?
 ;
 
 /** 
@@ -168,8 +184,7 @@ dateFieldType
  */
 dateTypes
 :
-	DATE
-	| LOCAL_DATE
+	LOCAL_DATE
 	| ZONED_DATETIME
 	| INSTANT
 ;
@@ -240,10 +255,22 @@ maxValidator
 	MAX LPAREN NUMERIC_VALUE RPAREN
 ;
 
+coreEntity
+:
+	CORE_USER
+;
+
 cardinality
 :
 	ONE_TO_MANY
 	| MANY_TO_ONE
+	| ONE_TO_ONE
+	| MANY_TO_MANY
+;
+
+userCardinality
+:
+	MANY_TO_ONE
 	| ONE_TO_ONE
 	| MANY_TO_MANY
 ;

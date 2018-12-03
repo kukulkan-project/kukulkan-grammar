@@ -40,6 +40,11 @@ ENTITY
 	'entity'
 ;
 
+DISPLAY_FIELD_MARKER
+:
+	'->'
+;
+
 STRING
 :
 	'String'
@@ -97,15 +102,6 @@ DOUBLE
 BOOLEAN_TYPE
 :
 	'Boolean'
-;
-
-/** 
- * DATE Token
- *  
- */
-DATE
-:
-	'Date'
 ;
 
 /** 
@@ -189,6 +185,15 @@ ONE_TO_ONE
 MANY_TO_MANY
 :
 	'ManyToMany'
+;
+
+/** 
+ * USER Token
+ *  
+ */
+CORE_USER
+:
+	'CoreUser'
 ;
 
 NUMERIC_VALUE
